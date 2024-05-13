@@ -31,7 +31,8 @@ public class Crianza {
     @JoinColumn(name = "animal_id")
     private Animal CrianzaAnimal;
 
-    @OneToMany(mappedBy = "compra_id")
+    @OneToMany
+    @JoinColumn(name = "compra_id")
     private List<Compra> CrianzaCompra;
 
     /**
