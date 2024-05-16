@@ -68,6 +68,23 @@
 			<version>3.1.0</version>
 		</dependency>
 
+		<!-- OPEN API // SWAGGER -->
+		<dependency>
+			<groupId>org.springdoc</groupId>
+			<artifactId>springdoc-openapi-ui</artifactId>
+			<version>1.6.7</version>
+		</dependency>
+
+
+		<!-- OPEN API // SWAGGER CUANDO TENGA EL YAML HECHO -->
+		<!--
+<dependency>
+    <groupId>org.springdoc</groupId>
+    <artifactId>springdoc-openapi-ui</artifactId>
+    <version>1.6.7</version>
+</dependency>
+-->
+
 
 		<!-- https://mvnrepository.com/artifact/org.modelmapper/modelmapper -->
 

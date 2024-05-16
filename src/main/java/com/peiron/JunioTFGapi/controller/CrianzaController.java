@@ -73,7 +73,7 @@ public class CrianzaController {
     }
 
 
-    //GET ALL ANIMALES
+    //GET ALL CRIANZA
     @GetMapping("/crianzas")
     public ResponseEntity<List<Crianza>> getCrianzas() {
         return ResponseEntity.ok(crianzaService.findAll());

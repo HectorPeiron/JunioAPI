@@ -46,3 +46,4 @@ public class Crianza {
     private Veterinario CrianzaVeterinario;
 
 }
+//la dejo a nulo y le meto if en caso de necesitar.

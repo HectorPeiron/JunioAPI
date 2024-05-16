@@ -2,8 +2,7 @@ package com.peiron.JunioTFGapi.controller;
 
 
 import com.peiron.JunioTFGapi.domain.Recurso;
-import com.peiron.JunioTFGapi.exception.ErrorMessage;
-import com.peiron.JunioTFGapi.exception.RecursoNotFoundException;
+import com.peiron.JunioTFGapi.exception.*;
 import com.peiron.JunioTFGapi.service.RecursoService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -16,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -42,7 +42,18 @@ public class RecursoController {
 
     //AÑADIR RECURSOS
 
+    @PostMapping("/tipoRecursos/{tipoRecursoId}/tipoAnimales/{tipoAnimalId}/unidades/{unidadId}/recursos")
+    public ResponseEntity<Recurso> addRecurso(@Valid @PathVariable("tipoRecursoId") long tipoRecursoId,
+                                              @Valid @PathVariable("tipoAnimalId") long tipoAnimalId,
+                                              @Valid @PathVariable("unidadId") long unidadId,
 
+                                              @RequestBody Recurso recurso)
+            throws TipoRecursoNotFoundException, TipoAnimalNotFoundException, UnidadNotFoundException {
+        logger.debug("COMIENZO DENTRO DEL ADD RECURSOS");
+        Recurso newRecurso = recursoService.addRecurso(recurso, tipoRecursoId,tipoAnimalId,unidadId );
+        logger.debug(" FINAL DEL ADD RECURSOS ");
+        return new ResponseEntity<>(newRecurso, HttpStatus.CREATED);
+    }
 
 
 
@@ -54,6 +65,28 @@ public class RecursoController {
         logger.debug("BORRADO DENTRO DEL BORRAR RECURSO");
         return ResponseEntity.noContent().build();
     }
+
+    //MODIFICAR RECURSOS
+    @PutMapping("/recursos/{id}/{tipoRecursoId}/{tipoAnimalId}/{unidadId}")
+    public ResponseEntity<Recurso> modifyCrianza(@PathVariable long id,
+                                                 @PathVariable("tipoRecursoId") long tipoRecursoId,
+                                                 @PathVariable("tipoAnimalId") long tipoAnimalId,
+                                                 @PathVariable("unidadId") long unidadId,
+                                                 @RequestBody Recurso recurso)
+            throws RecursoNotFoundException, TipoRecursoNotFoundException, TipoAnimalNotFoundException, UnidadNotFoundException  {
+        logger.debug("COMIENZO DENTRO DEL MODIFICAR RECURSOS");
+        Recurso modifiedRecurso = recursoService.modifyRecurso(id, tipoRecursoId, tipoAnimalId, unidadId, recurso);
+        logger.debug("COMIENZO DENTRO DEL MODIFICAR RECURSOS");
+        return ResponseEntity.status(HttpStatus.OK).body(modifiedRecurso);
+    }
+
+    //GET ALL RECURSOS
+    @GetMapping("/recursos")
+    public ResponseEntity<List<Recurso>> getRecursos() {
+        return ResponseEntity.ok(recursoService.findAll());
+    }
+
+
 
     /*********************************************
      *                                           *
