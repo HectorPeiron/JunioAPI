@@ -17,10 +17,15 @@ public class TipoAnimalServiceImpl implements TipoAnimalService {
     private ModelMapper modelMapper;
 
 
+    @Override
+    public TipoAnimal addTipoAnimal(TipoAnimal tipoAnimal) {
+        return tipoAnimalRepository.save(tipoAnimal);
+    }
 
     @Override
     public TipoAnimal findById(long id) throws TipoAnimalNotFoundException {
-        return tipoAnimalRepository.findById(id).orElseThrow(TipoAnimalNotFoundException::new);
+        return tipoAnimalRepository.findById(id)
+                .orElseThrow(TipoAnimalNotFoundException::new);
     }
 
 

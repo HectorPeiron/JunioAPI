@@ -2,6 +2,7 @@ package com.peiron.JunioTFGapi.service;
 
 
 import com.peiron.JunioTFGapi.domain.TipoRecurso;
+import com.peiron.JunioTFGapi.domain.Unidad;
 import com.peiron.JunioTFGapi.exception.TipoRecursoNotFoundException;
 import com.peiron.JunioTFGapi.repository.TipoRecursoRepository;
 import org.modelmapper.ModelMapper;
@@ -17,7 +18,10 @@ public class TipoRecursoServiceImpl implements TipoRecursoService {
     @Autowired
     private ModelMapper modelMapper;
 
-
+    @Override
+    public TipoRecurso addTipoRecurso(TipoRecurso tipoRecurso) {
+        return tipoRecursoRepository.save(tipoRecurso);
+    }
 
     @Override
     public TipoRecurso findById(long id) throws TipoRecursoNotFoundException {
