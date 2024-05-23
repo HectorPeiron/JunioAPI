@@ -1,6 +1,7 @@
 package com.peiron.JunioTFGapi.controller;
 
 import com.peiron.JunioTFGapi.domain.TipoRecurso;
+import com.peiron.JunioTFGapi.domain.Unidad;
 import com.peiron.JunioTFGapi.exception.TipoRecursoNotFoundException;
 import com.peiron.JunioTFGapi.service.TipoRecursoService;
 
@@ -12,6 +13,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.List;
 
 @RestController
 public class TipoRecursoController {
@@ -28,6 +30,10 @@ public class TipoRecursoController {
      *                                           *
      *                                           *
      *********************************************/
+    @GetMapping("/tipoRecursos")
+    public ResponseEntity<List<TipoRecurso>> getTipoRecursos() {
+        return ResponseEntity.ok(tipoRecursoService.findAll());
+    }
 
     //AÑADIR TIPO RECURSOS
     @PostMapping("/tipoRecursos")

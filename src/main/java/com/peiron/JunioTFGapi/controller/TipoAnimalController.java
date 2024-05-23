@@ -1,6 +1,7 @@
 package com.peiron.JunioTFGapi.controller;
 
 import com.peiron.JunioTFGapi.domain.TipoAnimal;
+import com.peiron.JunioTFGapi.domain.TipoRecurso;
 import com.peiron.JunioTFGapi.domain.Unidad;
 import com.peiron.JunioTFGapi.exception.TipoAnimalNotFoundException;
 import com.peiron.JunioTFGapi.exception.UnidadNotFoundException;
@@ -14,6 +15,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.List;
 
 @RestController
 public class TipoAnimalController {
@@ -23,7 +25,10 @@ public class TipoAnimalController {
 
     private final Logger logger = LoggerFactory.getLogger(TipoAnimalController.class);
 
-
+    @GetMapping("/tipoAnimales")
+    public ResponseEntity<List<TipoAnimal>> getTipoAnimales() {
+        return ResponseEntity.ok(tipoAnimalService.findAll());
+    }
     /*********************************************
      *                                           *
      *    Controlador de TipoAnimal              *

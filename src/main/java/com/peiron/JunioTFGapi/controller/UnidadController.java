@@ -29,6 +29,12 @@ public class UnidadController {
      *                                           *
      *********************************************/
 
+    @GetMapping("/unidades")
+    public ResponseEntity<List<Unidad>> getUnidades() {
+        return ResponseEntity.ok(unidadService.findAll());
+    }
+
+
     //AÑADIR UNIDADES
     @PostMapping("/unidades")
     public ResponseEntity<Unidad> addUnidad(@Valid @RequestBody Unidad unidad) {

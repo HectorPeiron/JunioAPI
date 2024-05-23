@@ -9,6 +9,8 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class TipoRecursoServiceImpl implements TipoRecursoService {
 
@@ -28,5 +30,8 @@ public class TipoRecursoServiceImpl implements TipoRecursoService {
         return tipoRecursoRepository.findById(id)
                 .orElseThrow(TipoRecursoNotFoundException::new);
     }
-
+    @Override
+    public List<TipoRecurso> findAll() {
+        return tipoRecursoRepository.findAll();
+    }
 }

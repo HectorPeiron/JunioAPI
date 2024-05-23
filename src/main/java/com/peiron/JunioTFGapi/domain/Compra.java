@@ -31,7 +31,7 @@ public class Compra {
     private List<Recurso> CompraRecurso;
 
     @ManyToOne
-    @JoinColumn(name = "crianza_id") // Esto enlaza Compra con una Crianza específica
+    @JoinColumn(name = "crianza_id")
     private Crianza CompraCrianza;
 
 }

@@ -12,6 +12,8 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class UnidadServiceImpl implements UnidadService {
 
@@ -20,6 +22,12 @@ public class UnidadServiceImpl implements UnidadService {
 
     @Autowired
     private ModelMapper modelMapper;
+
+
+    @Override
+    public List<Unidad> findAll() {
+        return unidadRepository.findAll();
+    }
 
     @Override
     public Unidad addUnidad(Unidad unidad) {

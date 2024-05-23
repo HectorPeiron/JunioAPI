@@ -44,7 +44,7 @@ public class CompraController {
     private final Logger logger = LoggerFactory.getLogger(CompraController.class);
 
     //AÑADIR COMPRA
-    @PostMapping("/recursos/{recursoId}crianzas/{crianzaId}/compras")
+    @PostMapping("/recursos/{recursoId}/crianzas/{crianzaId}/compras")
     public ResponseEntity<Compra> addCompra(@Valid @PathVariable("recursoId") long recursoId,
                                             @Valid @PathVariable("crianzaId") long crianzaId,
                                             @RequestBody Compra compra)

@@ -1,7 +1,5 @@
 package com.peiron.JunioTFGapi.controller;
 
-
-import com.peiron.JunioTFGapi.domain.Animal;
 import com.peiron.JunioTFGapi.domain.Veterinario;
 import com.peiron.JunioTFGapi.exception.*;
 import com.peiron.JunioTFGapi.service.VeterinarioService;

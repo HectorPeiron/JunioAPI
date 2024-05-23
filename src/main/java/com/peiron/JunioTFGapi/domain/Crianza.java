@@ -32,7 +32,7 @@ public class Crianza {
     private Animal CrianzaAnimal;
 
     @OneToMany
-    @JoinColumn(name = "compra_id")
+    @JoinColumn(name = "compra_id") //falta mapped by 
     private List<Compra> CrianzaCompra;
 
     /**
