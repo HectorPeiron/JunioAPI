@@ -21,7 +21,7 @@ public class Recurso {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private long id;
 
     @NotBlank(message = "El campo no puede estar en blanco")
     @NotNull(message = "El campo no puede estar vacío")
@@ -44,13 +44,10 @@ public class Recurso {
     @Column
     private String descripcion;
 
-/**
-    @ManyToMany(mappedBy = "recursos")
-    private List<Compra> compraRecurso;
- */
     @ManyToOne
     @JoinColumn(name = "tipoRecurso_id")
-    private TipoRecurso RecursoTipoRecurso;
+    private TipoRecurso tipoRecurso;
+
 
     @ManyToOne
     @JoinColumn(name = "tipoAnimal_id")

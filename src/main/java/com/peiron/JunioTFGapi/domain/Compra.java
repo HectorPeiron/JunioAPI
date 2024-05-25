@@ -1,6 +1,6 @@
 package com.peiron.JunioTFGapi.domain;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -9,16 +9,14 @@ import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.List;
 
-
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity(name = "Compras")
 public class Compra {
-//aqui tanto cantidad y en recurso
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private long id;
 
     @Column
     private LocalDate fechaCompra;
@@ -27,13 +25,15 @@ public class Compra {
     private String descripcion;
 
     @ManyToMany
-    @JoinTable(name = "recurso_id")
-    private List<Recurso> CompraRecurso;
+    @JoinTable(
+            name = "compra_recurso",
+            joinColumns = @JoinColumn(name = "compra_id"),
+            inverseJoinColumns = @JoinColumn(name = "recurso_id")
+    )
+    private List<Recurso> compraRecurso;
 
     @ManyToOne
     @JoinColumn(name = "crianza_id")
-    private Crianza CompraCrianza;
-
+    @JsonBackReference
+    private Crianza compraCrianza;
 }
-
-

@@ -36,15 +36,11 @@ public class CrianzaController {
     private final Logger logger = LoggerFactory.getLogger(CrianzaController.class);
 
     //AÑADIR CRIANZAS
-    @PostMapping("/animales/{animalId}/compras/{compraId}/veterinarios/{veterinarioId}/crianzas")
-    public ResponseEntity<Crianza> addCrianza(@Valid @PathVariable("animalId") long animalId,
-                                              @Valid @PathVariable("compraId") long compraId,
-                                              @Valid @PathVariable("veterinarioId") long veterinarioId,
-
-                                              @RequestBody Crianza crianza)
-            throws AnimalNotFoundException, CompraNotFoundException, VeterinarioNotFoundException {
+    @PostMapping("/crianzas")
+    public ResponseEntity<Crianza> addCrianza(@RequestBody Crianza crianza)
+    {
         logger.debug("COMIENZO DENTRO DEL ADD CRIANZA");
-        Crianza newCrianza = crianzaService.addCrianza(crianza, animalId,compraId,veterinarioId );
+        Crianza newCrianza = crianzaService.addCrianza(crianza);
         logger.debug(" FINAL DEL ADD CRIANZA ");
         return new ResponseEntity<>(newCrianza, HttpStatus.CREATED);
     }
@@ -59,15 +55,12 @@ public class CrianzaController {
     }
 
     //MODIFICAR CRIANZA
-    @PutMapping("/crianzas/{id}/{animalId}/{compraId}/{veterinarioId}")
+    @PutMapping("/crianzas/{id}")
     public ResponseEntity<Crianza> modifyCrianza(@PathVariable long id,
-                                                 @PathVariable("animalId") long animalId,
-                                                 @PathVariable("compraId") long compraId,
-                                                 @PathVariable("veterinarioId") long veterinarioId,
                                                @RequestBody Crianza crianza)
-            throws CrianzaNotFoundException, AnimalNotFoundException, CompraNotFoundException, VeterinarioNotFoundException {
+            throws CrianzaNotFoundException {
         logger.debug("COMIENZO DENTRO DEL MODIFICAR CRIANZA");
-        Crianza modifiedCrianza = crianzaService.modifyCrianza(id, animalId, compraId, veterinarioId, crianza);
+        Crianza modifiedCrianza = crianzaService.modifyCrianza(id, crianza);
         logger.debug("COMIENZO DENTRO DEL MODIFICAR CRIANZA");
         return ResponseEntity.status(HttpStatus.OK).body(modifiedCrianza);
     }

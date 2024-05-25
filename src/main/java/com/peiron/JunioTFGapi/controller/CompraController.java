@@ -18,6 +18,7 @@ import javax.validation.Valid;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 @RestController
 public class CompraController {
@@ -32,28 +33,35 @@ public class CompraController {
      *********************************************/
 
 
-    /** Faltaria añadir y buscar en caso de ser necesario
-     *
-     * El añadir hay que retocarlo
-     * */
-
-
     @Autowired
     CompraService compraService;
 
     private final Logger logger = LoggerFactory.getLogger(CompraController.class);
 
-    //AÑADIR COMPRA
-    @PostMapping("/recursos/{recursoId}/crianzas/{crianzaId}/compras")
-    public ResponseEntity<Compra> addCompra(@Valid @PathVariable("recursoId") long recursoId,
-                                            @Valid @PathVariable("crianzaId") long crianzaId,
-                                            @RequestBody Compra compra)
+
+
+
+    @PostMapping("/compras")
+    public ResponseEntity<Compra> addCompra(@Valid @RequestBody Compra compra)
             throws CrianzaNotFoundException, RecursoNotFoundException {
         logger.debug("COMIENZO DENTRO DEL ADD COMPRA");
-        Compra newCompra = compraService.addCompra(compra, recursoId, crianzaId);
-        logger.debug(" FINAL DEL ADD COMPRA ");
-        return new ResponseEntity<>(newCompra, HttpStatus.CREATED);
+
+        if (compra.getCompraCrianza() == null || compra.getCompraRecurso() == null || compra.getCompraRecurso().isEmpty()) {
+            throw new IllegalArgumentException("Crianza y Recursos no pueden ser null o vacíos");
+        }
+
+        Long crianzaId = compra.getCompraCrianza().getId();
+        List<Long> recursoIds = compra.getCompraRecurso().stream().map(recurso -> recurso.getId()).collect(Collectors.toList());
+        Compra newCompra = compraService.addCompra(compra, recursoIds, crianzaId);
+        logger.debug("FINAL DEL ADD COMPRA");
+        return ResponseEntity.status(HttpStatus.CREATED).body(newCompra);
     }
+
+
+
+
+
+
     //BORRAR COMPRA
     @DeleteMapping("/compras/{id}")
     public ResponseEntity<Void> deleteCompra(@PathVariable long id) throws CompraNotFoundException {
@@ -63,9 +71,9 @@ public class CompraController {
         return ResponseEntity.noContent().build();
     }
 
-
+/**
     //MODIFICAR COMPRA
-    @PutMapping("/compras/{id}/{recursoId}/{crianzaId}")
+    @PutMapping("/compras/{id}")
     public ResponseEntity<Compra> modifyCompra(@PathVariable long id,
                                                @PathVariable("recursoId") long recursoId,
                                                @PathVariable("crianzaId") long crianzaId,
@@ -77,7 +85,7 @@ public class CompraController {
         return ResponseEntity.status(HttpStatus.OK).body(modifiedCompra);
     }
 
-
+ */
     //GET ALL COMPRA
     @GetMapping("/compras")
     public ResponseEntity<List<Compra>> getCompras() {

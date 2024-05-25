@@ -1,25 +1,24 @@
 package com.peiron.JunioTFGapi.domain;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Set;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity(name = "Crianzas")
 public class Crianza {
-
-    //en esta clase tener solo fecha inicio y fecha fin y en el resto de tablas tener un id de crianza para saber aque crianza pertenece
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private long id;
 
     @Column(nullable = false)
     private LocalDate fechaInicio;
@@ -27,23 +26,21 @@ public class Crianza {
     @Column
     private LocalDate fechaFin;
 
-    @ManyToOne
-    @JoinColumn(name = "animal_id")
-    private Animal CrianzaAnimal;
+    @OneToMany(mappedBy = "animalCrianza")
+    @JsonManagedReference(value = "crianza-animales")
+    private List<Animal> crianzaAnimal;
 
-    @OneToMany
-    @JoinColumn(name = "compra_id") //falta mapped by 
-    private List<Compra> CrianzaCompra;
-
-    /**
-    @ManyToOne
-    @JoinColumn(name = "recurso_id")
-    private Recurso crianzaRecurso;
-    */
-
-    @ManyToOne
-    @JoinColumn(name = "veterinaro_id")
-    private Veterinario CrianzaVeterinario;
-
+    @OneToMany(mappedBy = "compraCrianza")
+    @JsonManagedReference
+    private List<Compra> crianzaCompra;
+/**
+    @ManyToMany
+    @JoinTable(
+            name = "crianza_veterinario",
+            joinColumns = @JoinColumn(name = "crianza_id"),
+            inverseJoinColumns = @JoinColumn(name = "veterinario_id")
+    )
+    @JsonBackReference
+    private Set<Veterinario> veterinarios;
+*/
 }
-//la dejo a nulo y le meto if en caso de necesitar.

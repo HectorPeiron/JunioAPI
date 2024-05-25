@@ -37,16 +37,21 @@ public class AnimalController {
 
     private final Logger logger = LoggerFactory.getLogger(AnimalController.class);
 
-    //AÑADIR ANIMAES
-    @PostMapping("/tipoAnimales/{tipoAnimalId}/crianzas/{crianzaId}/animales")
-    public ResponseEntity<Animal> addAnimal(@Valid @PathVariable("tipoAnimalId") long tipoAnimalId,
-                                            @Valid @PathVariable("crianzaId") long crianzaId,
-                                            @RequestBody Animal animal)
+
+    @PostMapping("/animales")
+    public ResponseEntity<Animal> addAnimal(@Valid @RequestBody Animal animal)
             throws CrianzaNotFoundException, TipoAnimalNotFoundException {
         logger.debug("COMIENZO DENTRO DEL ADD ANIMAL");
-        Animal newAnimal = animalService.addAnimal(animal, tipoAnimalId,crianzaId );
-        logger.debug(" FINAL DEL ADD ANIMAL ");
-        return new ResponseEntity<>(newAnimal, HttpStatus.CREATED);
+
+        if (animal.getAnimalTipoAnimal() == null || animal.getAnimalCrianza() == null) {
+            throw new IllegalArgumentException("TipoAnimal y Crianza no pueden ser null");
+        }
+
+        Long tipoAnimalId = animal.getAnimalTipoAnimal().getId();
+        Long crianzaId = animal.getAnimalCrianza().getId();
+        Animal newAnimal = animalService.addAnimal(animal, tipoAnimalId, crianzaId);
+        logger.debug("FINAL DEL ADD ANIMAL");
+        return ResponseEntity.status(HttpStatus.CREATED).body(newAnimal);
     }
 
     //BORRAR ANIMAL
@@ -61,13 +66,13 @@ public class AnimalController {
     //MODIFICAR ANIMAL
     @PutMapping("/animales/{id}/{tipoAnimalId}/{crianzaId}")
     public ResponseEntity<Animal> modifyAnimal(@PathVariable long id,
-                                               @PathVariable("tipoAnimalId") long tipoAnimalId,
-                                               @PathVariable("crianzaId") long crianzaId,
-                                               @RequestBody Animal animal)
-            throws AnimalNotFoundException, CrianzaNotFoundException ,TipoAnimalNotFoundException {
-        logger.debug("COMIENZO DENTRO DEL MODIFICAR ANIMAL");
-        Animal modifiedAnimal = animalService.modifyAnimal(id, crianzaId, tipoAnimalId , animal);
-        logger.debug("COMIENZO DENTRO DEL MODIFICAR ANIMAL");
+                                               @PathVariable long tipoAnimalId,
+                                               @PathVariable long crianzaId,
+                                               @Valid @RequestBody Animal animal)
+            throws AnimalNotFoundException, CrianzaNotFoundException, TipoAnimalNotFoundException {
+        logger.debug("Inicio de la modificación del animal con ID: {}", id);
+        Animal modifiedAnimal = animalService.modifyAnimal(id, crianzaId, tipoAnimalId, animal);
+        logger.debug("Final de la modificación del animal con ID: {}", id);
         return ResponseEntity.status(HttpStatus.OK).body(modifiedAnimal);
     }
 
