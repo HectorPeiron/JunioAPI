@@ -1,16 +1,14 @@
 package com.peiron.JunioTFGapi.domain;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
-import java.util.Set;
-
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -21,9 +19,11 @@ public class Crianza {
     private long id;
 
     @Column(nullable = false)
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     private LocalDate fechaInicio;
 
     @Column
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     private LocalDate fechaFin;
 
     @OneToMany(mappedBy = "animalCrianza")
@@ -33,14 +33,9 @@ public class Crianza {
     @OneToMany(mappedBy = "compraCrianza")
     @JsonManagedReference
     private List<Compra> crianzaCompra;
-/**
-    @ManyToMany
-    @JoinTable(
-            name = "crianza_veterinario",
-            joinColumns = @JoinColumn(name = "crianza_id"),
-            inverseJoinColumns = @JoinColumn(name = "veterinario_id")
-    )
-    @JsonBackReference
-    private Set<Veterinario> veterinarios;
-*/
+
+
+    @OneToMany(mappedBy = "bajaCrianza")
+    @JsonManagedReference(value = "crianza-bajas")
+    private List<Baja> crianzaBaja;
 }

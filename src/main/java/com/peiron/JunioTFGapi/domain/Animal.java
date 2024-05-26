@@ -1,6 +1,9 @@
 package com.peiron.JunioTFGapi.domain;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -12,6 +15,9 @@ import java.time.LocalDate;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity(name = "Animales")
+
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
+
 public class Animal {
 
     @Id
@@ -19,13 +25,12 @@ public class Animal {
     private long id;
 
     @Column
+    @JsonFormat(pattern = "yyyy-MM-dd")
     private LocalDate fechaLlegada;
 
     @Column
     private int numero;
 
-    @Column
-    private int bajas;
 
     @Column
     private String sexo;
@@ -35,7 +40,6 @@ public class Animal {
 
     @ManyToOne
     @JoinColumn(name = "tipoAnimal_id")
-    @JsonBackReference(value = "tipoAnimal-animales")
     private TipoAnimal animalTipoAnimal;
 
     @ManyToOne
