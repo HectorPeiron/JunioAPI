@@ -83,6 +83,19 @@ public class AnimalController {
         return ResponseEntity.ok(animalService.findAll());
     }
 
+    //GET  ANIMALES FILTRADOS POR EL ID
+    @GetMapping("/animales/crianza/{crianzaId}")
+    public ResponseEntity<List<Animal>> getAnimalesByCrianzaId(@PathVariable Long crianzaId) {
+        try {
+            List<Animal> animals = animalService.findAnimalsByCrianzaId(crianzaId);
+            if (animals.isEmpty()) {
+                return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+            }
+            return new ResponseEntity<>(animals, HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
 
 
     /*********************************************

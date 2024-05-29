@@ -10,4 +10,7 @@ import java.util.List;
 @Repository
 public interface BajaRepository extends CrudRepository<Baja, Long> {
     List<Baja> findAll();
+
+    List<Baja> findByBajaCrianza_Id(Long crianzaId);
+
 }

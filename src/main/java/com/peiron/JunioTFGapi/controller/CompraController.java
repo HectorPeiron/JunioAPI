@@ -92,7 +92,12 @@ public class CompraController {
         return ResponseEntity.ok(compraService.findAll());
     }
 
-
+    //GET COMPRA POR ID CRIANZA
+    @GetMapping("/compras/crianza/{crianzaId}")
+    public ResponseEntity<List<Compra>> getComprasByCrianzaId(@PathVariable Long crianzaId) throws CrianzaNotFoundException {
+        List<Compra> compras = compraService.findComprasByCrianzaId(crianzaId);
+        return ResponseEntity.ok(compras);
+    }
     /*********************************************
      *                                           *
      *    Sección de manejo de excepciones       *

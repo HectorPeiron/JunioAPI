@@ -19,4 +19,6 @@ public interface BajaService {
     Baja modifyBaja(long id, long crianzaId, long tipoBajaId, Baja baja) throws BajaNotFoundException, CrianzaNotFoundException, TipoBajaNotFoundException;
 
     Baja findById(long id) throws BajaNotFoundException;
+
+    List<Baja> findBajasByCrianzaId(Long crianzaId) throws CrianzaNotFoundException;
 }

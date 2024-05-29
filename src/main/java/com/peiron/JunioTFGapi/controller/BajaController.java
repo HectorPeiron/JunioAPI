@@ -87,6 +87,13 @@ public class BajaController {
 
 
 
+    //GET BAJAS POR ID CRIANZA
+    @GetMapping("/bajas/crianza/{crianzaId}")
+    public ResponseEntity<List<Baja>> getBajasByCrianzaId(@PathVariable Long crianzaId) throws CrianzaNotFoundException {
+        List<Baja> bajas = bajaService.findBajasByCrianzaId(crianzaId);
+        return ResponseEntity.ok(bajas);
+    }
+
     /*********************************************
      *                                           *
      *    Sección de manejo de excepciones       *

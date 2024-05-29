@@ -76,7 +76,10 @@ public class BajaServiceImpl implements BajaService {
         bajaRepository.delete(baja);
     }
 
-
+    @Override
+    public List<Baja> findBajasByCrianzaId(Long crianzaId) {
+        return bajaRepository.findByBajaCrianza_Id(crianzaId);
+    }
 
 
 }

@@ -9,4 +9,7 @@ import java.util.List;
 @Repository
 public interface AnimalRepository extends CrudRepository<Animal, Long> {
     List<Animal> findAll();
+
+    List<Animal> findByAnimalCrianzaId(Long crianzaId);
+
 }
