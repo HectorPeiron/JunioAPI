@@ -2,6 +2,7 @@ package com.peiron.JunioTFGapi.controller;
 
 
 import com.peiron.JunioTFGapi.domain.Crianza;
+import com.peiron.JunioTFGapi.domain.TipoRecurso;
 import com.peiron.JunioTFGapi.exception.*;
 import com.peiron.JunioTFGapi.service.CrianzaService;
 import org.slf4j.Logger;
@@ -72,7 +73,14 @@ public class CrianzaController {
         return ResponseEntity.ok(crianzaService.findAll());
     }
 
-
+    //BUSCAR TIPO CRIANZA POR ID
+    @GetMapping("crianzas/{id}")
+    public ResponseEntity<Crianza> getCrianzaId(@PathVariable long id) throws CrianzaNotFoundException {
+        logger.debug("COMIENZO DENTRO DEL GET TIPO RECURSO POR ID");
+        Crianza crianza = crianzaService.findByCrianzaId(id);
+        logger.debug("FINAL DENTRO DEL GET TIPO RECURSO POR ID");
+        return ResponseEntity.ok(crianza);
+    }
 
     /*********************************************
      *                                           *
